@@ -21,14 +21,15 @@ const process = {
         constituencies: partyData.length,
         constituencyNames: partyData.map(pd => pd.name)
       }
-    })
+    }).sort((a,b) => b.constituencies - a.constituencies);
   },
   regions(processedMain, regions, parties){
     //Just apply overall to subsets (regions)?
     return regions
       .map(r => ({
         data: process.overall(processedMain
-          .filter(cd => cd.region === r), parties),
+          .filter(cd => cd.region === r), parties)
+          .filter(c => c.constituencies > 0),
       region: r}));
   }
 };

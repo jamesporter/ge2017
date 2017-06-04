@@ -34,6 +34,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 20px;
 }
 
 .container {
@@ -58,7 +59,28 @@
   margin-top: 0px;
 }
 
-h1 {
+.subtitle {
+  color: white;
+  padding: 10px;
+  margin-top: 0px;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.square {
+  height: 24px;
+  width: 24px;
+  margin: 4px;
+}
+
+h1,h2 {
   font-family: 'Roboto Slab', serif;
 }
 
@@ -75,4 +97,8 @@ h1 {
 
 .view-select.active {
   background: rgba(125,185,232,0.8);
+}
+
+.region-container {
+  padding-top: 20px
 }

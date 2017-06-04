@@ -51,9 +51,9 @@ class App extends Component {
       case "constituency":
         return <Constituencies main2015={main2015} partyKeys={partyKeys} parties={parties} />;
       case "region":
-        return <Regions main2015={main2015} partyKeys={partyKeys} parties={parties} />;
+        return <Regions data={regions} />;
       case "overall":
-        return <Overall main2015={main2015} partyKeys={partyKeys} parties={parties} />;
+        return <Overall data={overall} />;
     }
   }
 }
