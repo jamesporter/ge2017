@@ -25,12 +25,36 @@ const process = {
   },
   regions(processedMain, regions, parties){
     //Just apply overall to subsets (regions)?
-    return regions
+    return regions.sort()
       .map(r => ({
         data: process.overall(processedMain
           .filter(cd => cd.region === r), parties)
           .filter(c => c.constituencies > 0),
       region: r}));
+  },
+  perturb(data, parties){
+    const partyKeys = Object.keys(parties);
+    const swing = process.swing(partyKeys);
+
+    console.log(swing);
+
+    return data.map(d => {
+      return {
+        ...d,
+        [swing.first]: d[swing.first]*0.8,
+        [swing.second]: d[swing.second] + d[swing.first] * 0.2
+      };
+    })
+  },
+  swing(arr){
+    const first = arr[Math.floor(Math.random() * arr.length)];
+    const second = arr[Math.floor(Math.random() * arr.length)];
+
+    if(first !== second){
+      return {first, second};
+    } else {
+      process.swing(arr);
+    }
   }
 };
 
