@@ -4,6 +4,7 @@ import './App.css';
 import data from "./data/data.json"
 import main2015 from "./data/main2015.json"
 import meta from "./data/meta.json"
+import Constituency from './components/Constituency';
 
 const { parties } = meta;
 const partyKeys = Object.keys(parties);
@@ -35,13 +36,7 @@ class App extends Component {
   }
 
   renderView(){
-    return main2015.map((d, idx) => <div key={idx}>
-      <h2>{d["Constituency Name"]}</h2>
-      {partyKeys.map((p, pIdx) => <div key={pIdx}>
-        <p style={{color: parties[p].colour}}>{parties[p].name} {d[p]}</p>
-      </div>)}
-      <pre>{JSON.stringify(d, null, 2)}</pre>
-    </div>);
+    return main2015.map((d, idx) => <Constituency data={d} partyKeys={partyKeys} parties={parties}/>);
   }
 }
 

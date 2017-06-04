@@ -30,6 +30,14 @@
   flex: 1;
   background: white;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.constituency {
+  width: 240px;
 }
 
 h1 {
