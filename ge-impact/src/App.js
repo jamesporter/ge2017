@@ -4,7 +4,7 @@ import './App.css';
 import data from "./data/data.json"
 import main2015 from "./data/main2015.json"
 import meta from "./data/meta.json"
-import Constituency from './components/Constituency';
+import Constituencies from './components/Constituencies';
 
 const { parties } = meta;
 const partyKeys = Object.keys(parties);
@@ -26,6 +26,8 @@ class App extends Component {
                 onClick={() => this.setState({view: "constituency"})}>Constituency</span>
           <span className={`view-select ${this.state.view === "region" ? "active" : ""}`}
                 onClick={() => this.setState({view: "region"})}>Region</span>
+          <span className={`view-select ${this.state.view === "overall" ? "active" : ""}`}
+                onClick={() => this.setState({view: "overall"})}>Overall</span>
         </div>
 
         <div className="view">
@@ -36,7 +38,12 @@ class App extends Component {
   }
 
   renderView(){
-    return main2015.map((d, idx) => <Constituency data={d} partyKeys={partyKeys} parties={parties}/>);
+    switch(this.state.view){
+      case "constituency":
+        return <Constituencies main2015={main2015} partyKeys={partyKeys} parties={parties} />;
+      case "region":
+        return <div/>;
+    }
   }
 }
 
