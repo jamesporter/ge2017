@@ -9,24 +9,39 @@ const { parties } = meta;
 const partyKeys = Object.keys(parties);
 
 class App extends Component {
+
+  state = {
+    view: "constituency"
+  };
+
   render() {
     return (
       <div className="App">
-        <div className="controls">
+        <div className="header">
           <h1>General Election Impact 2017</h1>
+        </div>
+        <div className="controls">
+          <span className={`view-select ${this.state.view === "constituency" ? "active" : ""}`}
+                onClick={() => this.setState({view: "constituency"})}>Constituency</span>
+          <span className={`view-select ${this.state.view === "region" ? "active" : ""}`}
+                onClick={() => this.setState({view: "region"})}>Region</span>
         </div>
 
         <div className="view">
-          {main2015.map((d, idx) => <div key={idx}>
-            <h2>{d["Constituency Name"]}</h2>
-            {partyKeys.map((p, pIdx) => <div key={pIdx}>
-              <p style={{color: parties[p].colour}}>{parties[p].name} {d[p]}</p>
-            </div>)}
-            <pre>{JSON.stringify(d, null, 2)}</pre>
-          </div>)}
+          {this.renderView()}
         </div>
       </div>
     );
+  }
+
+  renderView(){
+    return main2015.map((d, idx) => <div key={idx}>
+      <h2>{d["Constituency Name"]}</h2>
+      {partyKeys.map((p, pIdx) => <div key={pIdx}>
+        <p style={{color: parties[p].colour}}>{parties[p].name} {d[p]}</p>
+      </div>)}
+      <pre>{JSON.stringify(d, null, 2)}</pre>
+    </div>);
   }
 }
 
