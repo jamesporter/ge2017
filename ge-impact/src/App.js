@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import data from "./data/data.json"
 import main2015 from "./data/main2015.json"
 import meta from "./data/meta.json"
 import Constituencies from './components/Constituencies';
+import Overall from "./components/Overall";
+import Regions from "./components/Regions";
+import process from "./process";
 
-const { parties } = meta;
+
+const { parties, regions: regionNames } = meta;
 const partyKeys = Object.keys(parties);
+
+const main = process.main(main2015, parties);
+const overall = process.overall(main, parties);
+const regions = process.regions(main, regionNames, parties);
+
+console.log({main, overall, regions});
 
 class App extends Component {
 
@@ -42,7 +51,9 @@ class App extends Component {
       case "constituency":
         return <Constituencies main2015={main2015} partyKeys={partyKeys} parties={parties} />;
       case "region":
-        return <div/>;
+        return <Regions main2015={main2015} partyKeys={partyKeys} parties={parties} />;
+      case "overall":
+        return <Overall main2015={main2015} partyKeys={partyKeys} parties={parties} />;
     }
   }
 }
