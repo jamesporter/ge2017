@@ -38,13 +38,20 @@ const process = {
 
     console.log(swing);
 
-    return data.map(d => {
+    if(swing) {
       return {
-        ...d,
-        [swing.first]: d[swing.first]*0.8,
-        [swing.second]: d[swing.second] + d[swing.first] * 0.2
-      };
-    })
+        perturbed: data.map(d => {
+          return {
+            ...d,
+            [swing.first]: d[swing.first] * 0.75,
+            [swing.second]: d[swing.second] + d[swing.first] * 0.25
+          };
+        }),
+        swing
+      }
+    } else {
+      return data;
+    }
   },
   swing(arr){
     const first = arr[Math.floor(Math.random() * arr.length)];

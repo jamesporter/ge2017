@@ -25,20 +25,25 @@ class App extends Component {
     chaos: false,
     main,
     overall,
-    regions
+    regions,
+    swing: null
   };
 
   componentDidMount(){
-    setInterval(this.perturb, 5000);
+    setInterval(this.perturb, 2000);
   }
 
   perturb = () => {
     if(this.state.chaos){
-      const perturbed = process.perturb(main2015, parties);
-      const main = process.main(perturbed, parties);
-      const overall = process.overall(main, parties);
-      const regions = process.regions(main, regionNames, parties);
-      this.setState({main, overall, regions});
+      try {
+        const {perturbed, swing} = process.perturb(main2015, parties);
+        const main = process.main(perturbed, parties);
+        const overall = process.overall(main, parties);
+        const regions = process.regions(main, regionNames, parties);
+        this.setState({main, overall, regions, swing});
+      } catch(e) {
+        console.log(e);
+      }
     }
   };
 
@@ -58,7 +63,7 @@ class App extends Component {
 
           <div style={{width: 40}} />
 
-          <span className={`view-select ${this.state.chaos}`}
+          <span className={`view-select ${this.state.chaos && "active"}`}
                 onClick={() => this.setState({chaos: !this.state.chaos})}>Chaos</span>
         </div>
 
@@ -74,9 +79,9 @@ class App extends Component {
       case "constituency":
         return <Constituencies main2015={main2015} partyKeys={partyKeys} parties={parties} />;
       case "region":
-        return <Regions data={this.state.regions} />;
+        return <Regions data={this.state.regions} swing={this.state.swing} parties={parties} />;
       case "overall":
-        return <Overall data={this.state.overall} />;
+        return <Overall data={this.state.overall} swing={this.state.swing} parties={parties} />;
     }
   }
 }
