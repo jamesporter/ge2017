@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { VictoryChart, VictoryBar } from 'victory';
 
 export default ({parties, partyKeys, data: d}) => {
 
@@ -10,19 +9,12 @@ export default ({parties, partyKeys, data: d}) => {
     .filter(v => v.votes > 0)
     .sort((a,b) => b.votes - a.votes);
 
-
   return <div className="constituency">
-    <h2 style={{color: processedData[0] && processedData[0].colour}}>{d["Constituency Name"]}</h2>
+    <h2 className="item-title" style={{backgroundColor: processedData[0] && processedData[0].colour}}>{d["Constituency Name"]}</h2>
 
-    <VictoryChart responsive={false} style={{width: 220, height: 220}}>
-      <VictoryBar data={processedData} y={v => v.votes}
-      style={{data: {fill: v => v.colour}}}
-      />
-    </VictoryChart>
-
-    {partyKeys.map((p, pIdx) => <div key={pIdx}>
-      <p style={{color: parties[p].colour}}>{parties[p].name} {d[p]}</p>
+    {processedData.map((p, pIdx) => <div key={pIdx}>
+      <p style={{color: p.colour}}>{p.party} {p.votes}</p>
     </div>)}
-    <pre>{JSON.stringify(d, null, 2)}</pre>
+    {/*<pre>{JSON.stringify(d, null, 2)}</pre>*/}
   </div>
 }
